@@ -37,41 +37,46 @@ You should see 'active(running)' in green:
 
 ![mysqlrunning](https://github.com/naqeebghazi/sqldb.darey/blob/main/images/mysqlrunning.png?raw=true)
 
-mysqlServer needs to accept connections from remote hosts. if remote host connections arent going through, edit this file in mysqlServer to enable this:
 
-    $ sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+## Connect CLient to Server via SSH
 
-    And replace 'bind-address' 127.0.0.1 with 0.0.0.0
-
-## Connecting remotely from one MySQL server to another without using SSH involves configuring the MySQL servers to allow remote connections and then using MySQL client commands to connect from one server to another. 
+Connecting remotely from one MySQL server to another without using SSH involves configuring the MySQL servers to allow remote connections and then using MySQL client commands to connect from one server to another. 
 
 Here are the general steps to achieve this:
 
 ### 1. Configure MySQL for Remote Access
 
-  On the MySQL server that you want to connect to (let's call it the target server):
+  On the mysqlServer that you want to connect to (i.e. target server):
 
   Edit MySQL Configuration:
   Open the MySQL configuration file (usually my.cnf or mysqld.cnf, often found in /etc/mysql/).
+
+      $ sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
     
-  Ensure the bind-address is set to 0.0.0.0 to allow connections from any IP, or set it to the specific IP address of the server you'll be connecting from.
+  Ensure the 'bind-address' is set to 0.0.0.0 to allow connections from any IP, or set it to the specific IP address of the server you'll be connecting from.
     
-  Save and close the file.
-  
+  Save and close the file:
+
+      Esc > :wq
+        
   Grant Remote Access to a MySQL User:
   Log in to MySQL: 
     
-    mysql -u root -p.
-    
+    sudo mysql -u root -p
+
+If you arent able to login, restart the mysql then re-enter the above login and press ENTER when prompted for a password:
+
+    $ sudo systemctl restart mysql
+  
   Grant access to a user: 
   
-    GRANT ALL PRIVILEGES ON *.* TO 'username'@'%' IDENTIFIED BY 'password';. 
+    GRANT ALL PRIVILEGES ON *.* TO 'username'@'%' IDENTIFIED BY 'password'
   
   Replace username and password with appropriate values. The '%' allows connection from any host; replace it with a specific IP if needed.
   
   Flush privileges: 
     
-    FLUSH PRIVILEGES;.
+    FLUSH PRIVILEGES
     
   Exit MySQL: 
   
@@ -81,7 +86,8 @@ Here are the general steps to achieve this:
     
   Restart the MySQL service to apply changes: 
   
-    sudo systemctl restart mysql.
+    sudo systemctl restart mysql
+    
 
 ### 2. Open Necessary Ports on Firewall
   Ensure that the firewall on the target server allows incoming connections on MySQL's default port, which is 3306 (unless you've changed it). 
@@ -89,12 +95,12 @@ Here are the general steps to achieve this:
   This might involve configuring the server's firewall or the cloud platform's security groups (if it's a cloud-hosted server).
 
 ### 3. Connect from the Source Server
-  On the server you want to connect from:
+  On the server you want to connect from (mysqlClient):
 
   Use MySQL Client Command:
   Connect using: 
   
-    mysql -h target_server_ip -u username -p. 
+    mysql -h target_server_ip -u ubuntu -p
   
   Replace target_server_ip with the target server's IP address and username with the user you granted access to.
   
