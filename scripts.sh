@@ -1,4 +1,5 @@
-
+#Get your public IP:
+wget -qO- ifconfig.me
 
 mysqlClient: ssh -i /Users/nghazi/Downloads/ec2-nghazi.pem ubuntu@ec2-3-9-180-167.eu-west-2.compute.amazonaws.com
 
@@ -44,7 +45,7 @@ sudo ufw allow from 172.31.16.206 to any port 3306      # Ref: https://phoenixna
 sudo iptables -A INPUT -p tcp -s 172.31.16.206 --dport 3306 -j ACCEPT
 
 #Connect to remote mysql server from your local machine:
-mysql -u ubuntu -h 13.41.108.200 -p
+sudo mysql -u ubuntu -h 13.41.108.200 -p
 
 MySQL
 
