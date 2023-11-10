@@ -37,11 +37,11 @@ You should see 'active(running)' in green:
 
 ![mysqlrunning](https://github.com/naqeebghazi/sqldb.darey/blob/main/images/mysqlrunning.png?raw=true)
 
-mysqlServer needs to accept connections from remote hosts. if rmeote host connections arent going through, edit this file to enable this:
+mysqlServer needs to accept connections from remote hosts. if remote host connections arent going through, edit this file in mysqlServer to enable this:
 
     $ sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
 
-And replace 127.0.0.1 with 0.0.0.0
+    And replace 'bind-address' 127.0.0.1 with 0.0.0.0
 
 ## Connecting remotely from one MySQL server to another without using SSH involves configuring the MySQL servers to allow remote connections and then using MySQL client commands to connect from one server to another. 
 
