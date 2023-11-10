@@ -1,8 +1,8 @@
 
 
-mysqlClient: ssh -i /Users/nghazi/Downloads/ec2-nghazi.pem ubuntu@ec2-3-8-144-111.eu-west-2.compute.amazonaws.com
+mysqlClient: ssh -i /Users/nghazi/Downloads/ec2-nghazi.pem ubuntu@ec2-18-133-77-40.eu-west-2.compute.amazonaws.com
 
-mysqlServer: ssh -i /Users/nghazi/Downloads/ec2-nghazi.pem ubuntu@ec2-18-132-15-167.eu-west-2.compute.amazonaws.com
+mysqlServer: ssh -i /Users/nghazi/Downloads/ec2-nghazi.pem ubuntu@ec2-52-56-60-189.eu-west-2.compute.amazonaws.com
 
 ###############
 
