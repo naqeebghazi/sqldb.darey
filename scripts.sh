@@ -52,8 +52,14 @@ MySQL
 # Check MySQL User and Host permissions:
 SELECT host, user FROM mysql.user WHERE user = 'ubuntu'
 
+#List users in mysql
+select user from mysql.`user`;
 
-GRANT ALL PRIVILEGES ON *.* TO ubuntu@172.31.17.56 IDENTIFIED BY 'password'
+#Create user in mysql
+CREATE USER 'ubuntu'@'%' IDENTIFIED BY 'pop';
+
+
+GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'%' WITH GRANT OPTION;
 
 On mysqlClient to connect to mysqlServer:
 
