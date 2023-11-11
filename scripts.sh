@@ -53,8 +53,16 @@ MySQL
 SELECT host, user FROM mysql.user WHERE user = 'ubuntu'
 
 
-GRANT ALL PRIVILEGES ON *.* TO ubuntu@172.31.16.206 IDENTIFIED BY 'pop'
+GRANT ALL PRIVILEGES ON *.* TO ubuntu@172.31.17.56 IDENTIFIED BY 'password'
 
 On mysqlClient to connect to mysqlServer:
 
-    mysql -h 172.31.43.152 -u ubuntu -p
+    sudo mysql -u ubuntu -h 172.31.17.56 -p
+
+
+
+##########
+
+sudo apt update 
+sudo apt upgrade
+sudo apt install mysql-server
