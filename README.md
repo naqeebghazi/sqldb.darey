@@ -21,15 +21,23 @@ Ensure the outbound rules for both SGs are set to All traffic and All ipv4 addre
 
 ![mysqlserverSG](https://github.com/naqeebghazi/sqldb.darey/blob/main/images/mysqlServerSG.png?raw=true)
 
+Client inbound rules (in client's Security Group):
+
+![Client inbound rules](https://github.com/naqeebghazi/sqldb.darey/blob/main/images/clientInboundrules.png?raw=true)
+
+Server inbound rules (in servers's Security Group):
+
+![serverinboundrules](https://github.com/naqeebghazi/sqldb.darey/blob/main/images/serverInboundrules.png?raw=true)
+
 Update the package manager. Install MySQL on both servers. 
 
-    $ sudo apt update
-    $ sudo apt install mysql-server
-    $ sudo mysql_secure_installation
+    $ sudo apt update -y
+    $ sudo apt install mysql-server -y
+    $ sudo mysql_secure_installation -y
 
-For the last command of secure_installation, enter Y for everything. As your practising, you can enter no for the first prompt about password validation/strength.
+Last command is optional for secure_installation. Enter Y for everything or do the -y flag to automate this process. When you're practising, you can enter no for the first prompt about password validation/strength.
 
-Check MySQL is running on both systems:
+Check MySQL is running on both systems, client and server:
 
     $ sudo systemctl status mysql
 
@@ -53,7 +61,9 @@ Here are the general steps to achieve this:
 
       $ sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
     
-  Ensure the 'bind-address' is set to 0.0.0.0 to allow connections from any IP, or set it to the specific IP address of the server you'll be connecting from.
+  Ensure the 'bind-address' is set to 0.0.0.0 to allow connections from any IP, or set it to the specific IP address of the server you'll be connecting from:
+
+  ![bindaddress](https://github.com/naqeebghazi/sqldb.darey/blob/main/images/bindAddress.png?raw=true)
     
   Save and close the file:
 
@@ -70,9 +80,9 @@ If you arent able to login, restart the mysql then re-enter the above login and 
   
   Grant access to a user: 
   
-    GRANT ALL PRIVILEGES ON *.* TO 'username'@'%' IDENTIFIED BY 'password'
+    GGRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'%' WITH GRANT OPTION;
   
-  Replace username and password with appropriate values. The '%' allows connection from any host; replace it with a specific IP if needed.
+  Replace username and password with appropriate values. Maintain apotrophes. The '%' allows connection from any host; replace it with a specific IP if needed.
   
   Flush privileges: 
     
@@ -86,7 +96,7 @@ If you arent able to login, restart the mysql then re-enter the above login and 
     
   Restart the MySQL service to apply changes: 
   
-    sudo systemctl restart mysql
+    $ sudo systemctl restart mysql
     
 
 ### 2. Open Necessary Ports on Firewall
@@ -100,11 +110,25 @@ If you arent able to login, restart the mysql then re-enter the above login and 
   Use MySQL Client Command:
   Connect using: 
   
-    mysql -h target_server_ip -u ubuntu -p
+    mysql -u ubuntu -h 172.32.55.45 -p
   
-  Replace target_server_ip with the target server's IP address and username with the user you granted access to.
+  Replace 'ubuntu' with the target server's username and the IP address with your target private/public IP address. This is what the suucessful login will look like on the client:
+
+  ![sqlLoginSuccess](https://github.com/naqeebghazi/sqldb.darey/blob/main/images/mysqlLoginSuccess.png?raw=true)
   
-  Enter the password when prompted.
+You can then create a username on the client ('lex' in this example:
+
+    > CREATE USER 'lex'@'%' IDENTIFIED BY 'pop';
+
+The name must be in ''. The '%' means any ip address.  
+Login to the server seperately and check the username 'lex' (as in this example) is there by typing:
+
+      > select user from mysql.`user`;
+
+  Result is that the server has a new user written into its databse:
+
+  ![lexuser](https://github.com/naqeebghazi/sqldb.darey/blob/main/images/lexuser.png?raw=true)
+  
 
 Important Considerations
 Security Risks: 
