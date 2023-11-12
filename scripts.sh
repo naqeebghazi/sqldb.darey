@@ -56,19 +56,18 @@ SELECT host, user FROM mysql.user WHERE user = 'ubuntu'
 select user from mysql.`user`;
 
 #Create user in mysql
-CREATE USER 'ubuntu'@'%' IDENTIFIED BY 'pop';
+CREATE USER 'lex'@'%' IDENTIFIED BY 'pop';
 
-
+#Give full permissions to a user 'ubuntu':
 GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'%' WITH GRANT OPTION;
 
-On mysqlClient to connect to mysqlServer:
-
-    sudo mysql -u ubuntu -h 172.31.17.56 -p
+#On mysqlClient to connect to mysqlServer:
+mysql -u ubuntu -h 172.31.17.56 -p
 
 
 
 ##########
 
-sudo apt update 
-sudo apt upgrade
+sudo apt update -y
+sudo apt upgrade -y
 sudo apt install mysql-server
